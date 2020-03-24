@@ -1,4 +1,4 @@
-require './lib.item'
+require './lib/item'
 
 class GildedRose
 
