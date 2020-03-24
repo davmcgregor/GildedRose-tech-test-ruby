@@ -21,7 +21,7 @@ describe GildedRose do
       expect(items[0].quality).to eq 9
     end
 
-    it "degrades the Quality valie twice as fast once the sell by date has passed" do
+    it "degrades the Quality value twice as fast once the sell by date has passed" do
       items = [Item.new("test_item", 0, 10)]
       GildedRose.new(items).update_quality()
       expect(items[0].quality).to eq 8
@@ -36,6 +36,18 @@ describe GildedRose do
       expect(items[0].quality).to eq 0
     end
 
-  end
+    context "when the item is 'Aged Brie'" do
+      it "increases in Quality the older it gets" do
+        items = [Item.new("Aged Brie", 10, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq 11
+      end
 
+      it "never has a Quality value more than 50" do
+        items = [Item.new("Aged Brie", 10, 50)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq 50
+      end
+    end
+  end
 end
