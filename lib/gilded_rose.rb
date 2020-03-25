@@ -14,10 +14,11 @@ class GildedRose
   def update_quality
     @items.each do |item|
       change_sell_in(item, -1) unless is_sulfuras?(item)
-      change_quality(item, - 1) unless special?(item)
+      change_quality(item, - 1) unless is_special?(item)
 
-      if special?(item)
-        change_quality(item, 1)  
+      if is_special?(item)
+        change_quality(item, -2) if is_conjured?(item)
+        change_quality(item, 1) if is_brie?(item) || is_backstage_passes?(item) || is_sulfuras?(item)  
         change_quality(item, 1) if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_ONE
         change_quality(item, 1) if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_TWO
       end
@@ -52,6 +53,14 @@ class GildedRose
     item.name == "Sulfuras, Hand of Ragnaros"
   end
 
+  def is_conjured?(item)
+    item.name == "Conjured Mana Cake"
+  end
+
+  def is_special?(item)
+    is_brie?(item) || is_backstage_passes?(item) || is_sulfuras?(item) || is_conjured?(item)
+  end
+
   def change_quality(item, value)
     if quality_in_range?(item)
       item.quality += value
@@ -69,8 +78,5 @@ class GildedRose
   def change_sell_in(item, value)
     item.sell_in += value
   end
-  
-  def special?(item)
-    is_brie?(item) || is_backstage_passes?(item) || is_sulfuras?(item)
-  end
+
 end
