@@ -4,7 +4,9 @@ class GildedRose
 
   MAX_QUALITY = 50
   MIN_QUALITY = 0
-
+  PASSES_THRESHOLD_ONE = 11
+  PASSES_THRESHOLD_TWO = 6
+  
   def initialize(items)
     @items = items
   end
@@ -21,12 +23,12 @@ class GildedRose
         if item.quality < MAX_QUALITY
           item.quality = item.quality + 1
           if is_backstage_passes?(item)
-            if item.sell_in < 11
+            if item.sell_in < PASSES_THRESHOLD_ONE
               if item.quality < MAX_QUALITY
                 item.quality = item.quality + 1
               end
             end
-            if item.sell_in < 6
+            if item.sell_in < PASSES_THRESHOLD_TWO
               if item.quality < MAX_QUALITY
                 item.quality = item.quality + 1
               end
