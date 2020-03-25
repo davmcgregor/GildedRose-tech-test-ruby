@@ -65,16 +65,11 @@ describe GildedRose do
     end
 
     context "when the item is 'Backstage passes to a TAFKAL80ETC concert'" do
-      it "drops the Quality value to 0 after the concert" do
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
+    
+      it "increases the Quality value by 1 when there are more than 10 days before the concert" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 12, 10)]
         GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 0
-      end
-
-      it "increases the Quality value by 3 when there are 5 days or less before the concert" do
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 2, 10)]
-        GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 13
+        expect(items[0].quality).to eq 11
       end
 
       it "increases the Quality value by 2 when there are 10 days or less before the concert" do
@@ -83,11 +78,18 @@ describe GildedRose do
         expect(items[0].quality).to eq 12
       end
 
-      it "increases the Quality value by 1 when there are more than 10 days before the concert" do
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 12, 10)]
+      it "increases the Quality value by 3 when there are 5 days or less before the concert" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 2, 10)]
         GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 11
+        expect(items[0].quality).to eq 13
       end
+
+      it "drops the Quality value to 0 after the concert" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq 0
+      end
+
 
       it "never has a Quality value more than 50" do
         items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 8, 49)]

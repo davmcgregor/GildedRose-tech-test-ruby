@@ -15,27 +15,28 @@ class GildedRose
     @items.each do |item|
       change_sellin(item, -1) unless is_sulfuras?(item)
 
-      if !is_brie?(item) && !is_backstage_passes?(item) && !is_sulfuras?(item)
-        change_quality(item, -1)  
-      else
-        change_quality(item, 1)
+      if is_brie?(item) || is_backstage_passes?(item) || is_sulfuras?(item)
+        change_quality(item, 1)  
         if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_ONE
           change_quality(item, 1) 
         end
-        if item.sell_in < PASSES_THRESHOLD_TWO
+        if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_TWO
           change_quality(item, 1) 
         end
+      else
+        change_quality(item, - 1)
       end
+      
 
       if expired?(item)
-        if !is_brie?(item)
-          if !is_backstage_passes?(item) && !is_sulfuras?(item)
-            change_quality(item, -1)
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
+        if is_brie?(item)
           change_quality(item, 1) 
+        else
+          if is_backstage_passes?(item) || is_sulfuras?(item)
+            item.quality = item.quality - item.quality
+          else
+            change_quality(item, -1) 
+          end
         end
       end
 
