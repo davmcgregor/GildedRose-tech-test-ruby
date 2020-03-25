@@ -16,21 +16,21 @@ class GildedRose
       if !is_brie?(item) && !is_backstage_passes?(item)
         if item.quality > MIN_QUALITY
           if !is_sulfuras?(item)
-            item.quality = item.quality - 1
+            change_quality(item, -1)
           end
         end
       else
         if item.quality < MAX_QUALITY
-          item.quality = item.quality + 1
+          change_quality(item, 1)
           if is_backstage_passes?(item)
             if item.sell_in < PASSES_THRESHOLD_ONE
               if item.quality < MAX_QUALITY
-                item.quality = item.quality + 1
+                change_quality(item, 1)
               end
             end
             if item.sell_in < PASSES_THRESHOLD_TWO
               if item.quality < MAX_QUALITY
-                item.quality = item.quality + 1
+                change_quality(item, 1)
               end
             end
           end
@@ -46,7 +46,7 @@ class GildedRose
           if !is_backstage_passes?(item)
             if item.quality > MIN_QUALITY
               if !is_sulfuras?(item)
-                item.quality = item.quality - 1
+                change_quality(item, -1)
               end
             end
           else
@@ -54,7 +54,7 @@ class GildedRose
           end
         else
           if item.quality < MAX_QUALITY
-            item.quality = item.quality + 1
+            change_quality(item, 1)
           end
         end
       end
@@ -74,6 +74,10 @@ class GildedRose
 
   def is_sulfuras?(item)
     item.name == "Sulfuras, Hand of Ragnaros"
+  end
+
+  def change_quality(item, value)
+    item.quality += value
   end
   
 end
