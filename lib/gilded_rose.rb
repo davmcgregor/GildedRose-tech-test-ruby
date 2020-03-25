@@ -29,7 +29,7 @@ class GildedRose
 
       change_sellin(item, -1) unless is_sulfuras?(item)
 
-      if item.sell_in < MIN_QUALITY
+      if expired?(item)
         if !is_brie?(item)
           if !is_backstage_passes?(item)
             change_quality(item, -1) unless is_sulfuras?(item)
@@ -66,6 +66,10 @@ class GildedRose
 
   def quality_in_range?(item)
     item.quality > MIN_QUALITY && item.quality < MAX_QUALITY
+  end
+
+  def expired?(item)
+    item.sell_in < 0
   end
 
   def change_sellin(item, value)
