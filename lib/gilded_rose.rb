@@ -33,7 +33,7 @@ class GildedRose
           change_quality(item, 1) 
         else
           if is_backstage_passes?(item) || is_sulfuras?(item)
-            item.quality = item.quality - item.quality
+            item.quality = MIN_QUALITY
           else
             change_quality(item, -1) 
           end
