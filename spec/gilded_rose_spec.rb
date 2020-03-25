@@ -52,15 +52,15 @@ describe GildedRose do
 
     context "when the item is 'Sulfuras, Hand of Ragnaros'" do
       it "does not change the SellIn value" do
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 50)]
         GildedRose.new(items).update_quality()
-        expect(items[0].sell_in).to eq 10
+        expect(items[0].sell_in).to eq 0
       end
 
       it "does not change the Quality value" do
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 50)]
         GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 10
+        expect(items[0].quality).to eq 50
       end
     end
 
@@ -84,7 +84,7 @@ describe GildedRose do
       end
 
       it "increases the Quality value by 1 when there are more than 10 days before the concert" do
-        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 10)]
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 12, 10)]
         GildedRose.new(items).update_quality()
         expect(items[0].quality).to eq 11
       end

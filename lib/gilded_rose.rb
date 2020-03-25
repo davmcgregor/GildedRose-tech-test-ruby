@@ -13,8 +13,10 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      if !is_brie?(item) && !is_backstage_passes?(item)
-        change_quality(item, -1) unless is_sulfuras?(item)
+      change_sellin(item, -1) unless is_sulfuras?(item)
+
+      if !is_brie?(item) && !is_backstage_passes?(item) && !is_sulfuras?(item)
+        change_quality(item, -1)  
       else
         change_quality(item, 1)
         if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_ONE
@@ -24,8 +26,6 @@ class GildedRose
           change_quality(item, 1) 
         end
       end
-
-      change_sellin(item, -1) unless is_sulfuras?(item)
 
       if expired?(item)
         if !is_brie?(item)
