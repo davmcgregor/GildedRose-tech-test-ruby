@@ -89,6 +89,15 @@ describe GildedRose do
         expect(items[0].quality).to eq 11
       end
 
+      it "never has a Quality value more than 50" do
+        items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 8, 49)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq 50
+      end
+
+    end
+
+    context "when the item is 'Conjured'" do
     end
 
   end
