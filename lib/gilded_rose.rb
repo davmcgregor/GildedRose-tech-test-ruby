@@ -38,7 +38,7 @@ class GildedRose
       end
 
       if !is_sulfuras?(item)
-        item.sell_in = item.sell_in - 1
+        change_sellin(item, -1)
       end
 
       if item.sell_in < MIN_QUALITY
@@ -78,6 +78,10 @@ class GildedRose
 
   def change_quality(item, value)
     item.quality += value
+  end
+
+  def change_sellin(item, value)
+    item.sell_in += value
   end
   
 end
