@@ -17,13 +17,11 @@ class GildedRose
         change_quality(item, -1) unless is_sulfuras?(item)
       else
         change_quality(item, 1)
-        if is_backstage_passes?(item)
-          if item.sell_in < PASSES_THRESHOLD_ONE
-            change_quality(item, 1) 
-          end
-          if item.sell_in < PASSES_THRESHOLD_TWO
-            change_quality(item, 1) 
-          end
+        if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_ONE
+          change_quality(item, 1) 
+        end
+        if item.sell_in < PASSES_THRESHOLD_TWO
+          change_quality(item, 1) 
         end
       end
 
@@ -31,8 +29,8 @@ class GildedRose
 
       if expired?(item)
         if !is_brie?(item)
-          if !is_backstage_passes?(item)
-            change_quality(item, -1) unless is_sulfuras?(item)
+          if !is_backstage_passes?(item) && !is_sulfuras?(item)
+            change_quality(item, -1)
           else
             item.quality = item.quality - item.quality
           end
