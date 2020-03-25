@@ -15,47 +15,35 @@ class GildedRose
     @items.each do |item|
       if !is_brie?(item) && !is_backstage_passes?(item)
         if item.quality > MIN_QUALITY
-          if !is_sulfuras?(item)
-            change_quality(item, -1)
-          end
+          change_quality(item, -1) unless is_sulfuras?(item)
         end
       else
         if item.quality < MAX_QUALITY
           change_quality(item, 1)
           if is_backstage_passes?(item)
             if item.sell_in < PASSES_THRESHOLD_ONE
-              if item.quality < MAX_QUALITY
-                change_quality(item, 1)
-              end
+              change_quality(item, 1) if item.quality < MAX_QUALITY
             end
             if item.sell_in < PASSES_THRESHOLD_TWO
-              if item.quality < MAX_QUALITY
-                change_quality(item, 1)
-              end
+              change_quality(item, 1) if item.quality < MAX_QUALITY
             end
           end
         end
       end
 
-      if !is_sulfuras?(item)
-        change_sellin(item, -1)
-      end
+      change_sellin(item, -1) unless is_sulfuras?(item)
 
       if item.sell_in < MIN_QUALITY
         if !is_brie?(item)
           if !is_backstage_passes?(item)
             if item.quality > MIN_QUALITY
-              if !is_sulfuras?(item)
-                change_quality(item, -1)
-              end
+              change_quality(item, -1) unless is_sulfuras?(item)
             end
           else
             item.quality = item.quality - item.quality
           end
         else
-          if item.quality < MAX_QUALITY
-            change_quality(item, 1)
-          end
+          change_quality(item, 1) if item.quality < MAX_QUALITY
         end
       end
 
