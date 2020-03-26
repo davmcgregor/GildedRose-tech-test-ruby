@@ -5,11 +5,35 @@
 
 #### Technologies: Ruby, RSpec, TravisCI
 
-[Task](#Task) | [Specification](#Specification) | [Testing](#Testing) | [Further Instructions](#Further_Instructions) 
+[Task](#Task) | [Installation](#Installation) | [Specifications](#Specifications) | [Further Instructions](#Further_Instructions) 
 
 ![gildedrose](https://miro.medium.com/max/1200/1*NoIcn06ksMOa-Ydv1UvYEw.jpeg)
 
 This is a well known kata developed by [Terry Hughes](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/). This is commonly used as a tech test to assess a candidate's ability to read, refactor and extend legacy code. 
+
+## <a name="Installation">Installation Instructions</a>
+
+1. Fork this repository, clone to your local machine then change into the directory:
+```
+$ git clone git@github.com:davmcgregor/GildedRose-tech-test-ruby.git
+$ cd GildedRose-tech-test-ruby
+```
+2. Load dependencies with bundle:
+```
+$ gem install bundle
+$ bundle
+```
+3. Run the app in the terminal:
+```Shell
+$ irb
+> require './lib/gilded_rose.rb'
+```
+4. Run Rspec for tests and coverage, then rubocop for linting
+```
+$ rspec
+$ rubocop
+```
+![gildedrose_tests](gildedrose_tests.png)
 
 ## <a name="Task">The Task</a>
 
@@ -17,7 +41,7 @@ This is a well known kata developed by [Terry Hughes](http://iamnotmyself.com/20
 
 All items have a SellIn value which denotes the number of days we have to sell the item. All items have a Quality value which denotes how valuable the item is. At the end of each day our system lowers both values for every item. Pretty simple, right? Well this is where it gets interesting:
 
-## <a name="Specification">Specification</a>
+## <a name="Specifications">Specifications</a>
 
 - Once the sell by date has passed, Quality degrades twice as fast
 - The Quality of an item is never negative
@@ -31,9 +55,6 @@ We have recently signed a supplier of conjured items. This requires an update to
 * “Conjured” items degrade in Quality twice as fast as normal items
 
 Feel free to make any changes to the UpdateQuality method and add any new code as long as everything still works correctly. However, do not alter the Item class or Items property as those belong to the goblin in the corner who will insta-rage and one-shot you as he doesn’t believe in shared code ownership (you can make the UpdateQuality method and Items property static if you like, we’ll cover for you)."*
-
-## <a name="Testing">Testing</a>
-
 
 ## <a name="Further_Instructions">Further Instructions</a>
 
