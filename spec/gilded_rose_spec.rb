@@ -9,7 +9,7 @@ describe GildedRose do
       expect(items[0].name).to eq "+5 Dexterity Vest"
     end
 
-    it "lowers the SellIn value by 1 at the end of each day" do
+    it "lowers the Sell_In value by 1 at the end of each day" do
       items = [Item.new("+5 Dexterity Vest", 10, 10)]
       GildedRose.new(items).update_quality()
       expect(items[0].sell_in).to eq 9
@@ -37,30 +37,30 @@ describe GildedRose do
     end
 
     context "when the item is 'Aged Brie'" do
-      it "increases in Quality the older it gets" do
+      it "increases in quality the older it gets" do
         items = [Item.new("Aged Brie", 10, 10)]
         GildedRose.new(items).update_quality()
         expect(items[0].quality).to eq 11
       end
 
-      it "never has a Quality value more than 50" do
-        items = [Item.new("Aged Brie", 10, 50)]
+      it "increases in quality despite the SellIn date passing" do
+        items = [Item.new("Aged Brie", -1, 10)]
         GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 50
+        expect(items[0].quality).to eq 11
       end
     end
 
     context "when the item is 'Sulfuras, Hand of Ragnaros'" do
-      it "does not change the SellIn value" do
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 50)]
+      it "does not change the Sell_In value" do
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
         GildedRose.new(items).update_quality()
-        expect(items[0].sell_in).to eq 0
+        expect(items[0].sell_in).to eq 10
       end
 
       it "does not change the Quality value" do
-        items = [Item.new("Sulfuras, Hand of Ragnaros", 0, 50)]
+        items = [Item.new("Sulfuras, Hand of Ragnaros", 10, 10)]
         GildedRose.new(items).update_quality()
-        expect(items[0].quality).to eq 50
+        expect(items[0].quality).to eq 10
       end
     end
 
@@ -100,10 +100,16 @@ describe GildedRose do
     end
 
     context "when the item is 'Conjured'" do
-      it "degrades in Quality twice as fast as normal items" do
+      it "degrades in Quality twice as fast as normal items do before Sellin date passes" do
         items = [Item.new("Conjured Mana Cake", 10, 10)]
         GildedRose.new(items).update_quality()
         expect(items[0].quality).to eq 8
+      end
+
+      it "degrades in Quality twice as fast as normal items do after Sellin date passes" do
+        items = [Item.new("Conjured Mana Cake", 0, 10)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].quality).to eq 6
       end
     end
 
