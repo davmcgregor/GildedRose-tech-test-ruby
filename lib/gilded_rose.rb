@@ -18,24 +18,18 @@ class GildedRose
 
       if is_special?(item)
         change_quality(item, -2) if is_conjured?(item)
-        change_quality(item, 1) if is_brie?(item) || is_backstage_passes?(item) || is_sulfuras?(item)  
+        change_quality(item, 1) if is_brie?(item) && item.quality < MAX_QUALITY
+        change_quality(item, 1) if is_backstage_passes?(item) || is_sulfuras?(item)  
         change_quality(item, 1) if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_ONE
         change_quality(item, 1) if is_backstage_passes?(item) && item.sell_in < PASSES_THRESHOLD_TWO
       end
       
-
       if expired?(item)
-        if is_brie?(item)
-          change_quality(item, 1) 
-        else
-          if is_backstage_passes?(item)
-            item.quality = MIN_QUALITY
-          else
-            change_quality(item, -1) 
-          end
-        end
+        change_quality(item, -1) unless is_special?(item)
+        change_quality(item, -2) if is_conjured?(item)
+        change_quality(item, 1) if is_brie?(item) && item.quality < MAX_QUALITY
+        item.quality = MIN_QUALITY if is_backstage_passes?(item)
       end
-
     end
   end
 
@@ -62,7 +56,7 @@ class GildedRose
   end
 
   def change_quality(item, value)
-    if quality_in_range?(item)
+    if quality_in_range?(item) || is_brie?(item)
       item.quality += value
     end
   end
@@ -72,7 +66,7 @@ class GildedRose
   end
 
   def expired?(item)
-    item.sell_in < 0
+    item.sell_in <= 0
   end
 
   def change_sell_in(item, value)
